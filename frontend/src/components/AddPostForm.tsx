@@ -48,7 +48,7 @@ export const AddPostForm: React.FC<AddPostFormProps> = ({
                 type="text"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                // required
+                required
                 minLength={1}
                 className="w-full px-3 py-2 border rounded-md"
                 placeholder="Give your post a title"
@@ -62,7 +62,7 @@ export const AddPostForm: React.FC<AddPostFormProps> = ({
               <textarea
                 value={body}
                 onChange={(e) => setBody(e.target.value)}
-                // required
+                required
                 minLength={1}
                 rows={6}
                 className="w-full px-3 py-2 border rounded-md"
