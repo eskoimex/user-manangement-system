@@ -1,24 +1,42 @@
-import { Router, Request, Response } from "express";
 
+import { Router } from "express";
+import { asyncHandler } from "../utils/asyncHandler";
+import { validateQuery } from "../middleware/validation";
+import { getUsersSchema } from "../validation/userSchemas";
 import { getUsers, getUsersCount } from "../db/users/users";
 
 const router = Router();
 
-router.get("/", async (req: Request, res: Response) => {
-  const pageNumber = Number(req.query.pageNumber) || 0;
-  const pageSize = Number(req.query.pageSize) || 4;
-  if (pageNumber < 0 || pageSize < 1) {
-    res.status(400).send({ message: "Invalid page number or page size" });
-    return;
-  }
+router.get("/", 
+  validateQuery(getUsersSchema),
+  asyncHandler(async (req, res) => {
+    const { pageNumber, pageSize } = req.query;
 
-  const users = await getUsers(pageNumber, pageSize);
-  res.send(users);
-});
+    const users = await getUsers(Number(pageNumber), Number(pageSize));
+    const total = await getUsersCount();
+    
+    res.json({
+      success: true,
+      message:"Users Fetched Successfully",
+      data: users,
+      pagination: {
+        page: Number(pageNumber),
+        pageSize: Number(pageSize),
+        total,
+        totalPages: Math.ceil(total / Number(pageSize))
+      }
+    });
+  })
+);
 
-router.get("/count", async (req: Request, res: Response) => {
+router.get("/count", asyncHandler(async (req, res) => {
   const count = await getUsersCount();
-  res.send({ count });
-});
+  
+  res.json({
+    success: true,
+    message: "Users Count Fetched Successfully",
+    data: { count },
+  });
+}));
 
 export default router;

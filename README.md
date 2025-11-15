@@ -1,111 +1,337 @@
-# Web Developer Assignment
+User Management System - Full Stack Application
+A comprehensive full-stack application for managing users and their posts, built with React TypeScript frontend and Node.js TypeScript backend with SQLite database.
 
-This full-stack assignment involves building a user management system where developers must extend a Node.js/SQLite backend for user and post operations, and create a React/TypeScript frontend that displays user data in a paginated table and allows for post management, all while following provided design specifications.
+🚀 Features
+Backend Features
+RESTful API with Express.js and TypeScript
 
+SQLite Database with existing user, address, and post data
 
-## Backend
+User Management with pagination and address information
 
-### Provided Backend
+Post Management - Create, read, and delete posts
 
-A Node server written in TypeScript is provided.
-The server utilizes an SQLite database (data.db) containing all relevant data, including users posts and addresses.
-The server exposes several partial RESTful API endpoints:
+Input Validation and comprehensive error handling
 
-User Endpoints:
-- `GET /users` -  Returns a list of users with pagination support. (e.g., /users?pageNumber=0&pageSize=10).
-- `GET /users/count` - Returns the total number of users.
-Post Endpoint:
-- `GET /posts` - Returns posts filtered by a specific user ID, using the userId query parameter (e.g., /posts?userId={userId}).
+CORS enabled for cross-origin requests
 
-### Backend Requirements
+Frontend Features
+React 18 with TypeScript for type safety
 
-You are required to implement the following backend functionalities:
+Tailwind CSS for modern, responsive design
 
-- **Address to User**
-  - Extend the existing user-related endpoints to include address (metadata associated with the user).
-  - Query the address from the database and include them in the user response.
-  - Ensure the address are properly validated and formatted before returning to the frontend.
-- **Post Deletion**
-  - Create an endpoint to delete a post by its ID.
-  - Remove the post from the database upon successful deletion.
-  - Return appropriate HTTP status codes and messages.
-- **Add a New Post**
-  - Create an endpoint to add a new post for a user, accepting **Title**, **Body**, and **User ID**.
-  - Validate input data and handle errors.
-  - Save the new post to the database upon success.
+React Query for efficient data fetching and caching
 
-## Front-End
+Loading States with loading.io CSS animations
 
-### General Requirements
+Responsive Design that works on all devices
 
-- Implement the web UI using **TypeScript**, **React**, **React Query**, and **Tailwind CSS**.
-- Follow the **Tailwind** and **shadcn/ui** design tokens (defined in Figma) for consistent styling.
-- Follow the **Figma design** provided in the Resources section.
-- Ensure **graceful handling of API errors** or unexpected data from the backend.
-- Components and pages should have **error and loading states**.
-- Emphasize **code reusability** and **separation of concerns** in your components.
+Card-based Layout for posts with 3-column grid
 
-### Users Table
+Optimistic Updates for smooth user experience
 
-- Set up an internal API that fetches a list of users from your backend API, using the pagination.
-- Display the users in an organized table with the following features:
-  - **Pagination**: Show 4 users per page.
-  - **User Details**:
-    - Full Name
-    - Email Address
-    - Address formatted as "street, state, city, zipcode". Keep the address column at 392px width and use ellipsis (...) for any overflow.
+🛠 Tech Stack
+Backend
+Node.js with Express.js
 
-### User Posts
+TypeScript for type safety
 
-- When clicking on a user row, navigate to a new page that displays a list of the user's posts.
-- Fetch the user's posts from your backend API.
-- The page should include:
-  - A header with a summary of the user and the number of posts.
-  - A list of all posts (**no pagination required**).
-  - Each post should display:
-    - **Title**
-    - **Body**
-    - A **Delete** icon.
-      - Clicking the Delete icon should delete the post via your backend API and update the UI accordingly.
-  - An option to **add a new post**:
-    - Include a button that opens a form to create a new post with **Title** and **Body** fields.
-    - Upon submission, the new post should be saved via your backend API and appear in the list of posts without requiring a page refresh.
-- Ensure the design is intuitive and posts are easily readable by closely following the provided Figma design.
+SQLite3 for database
 
-## Guidelines
+Config for environment management
 
-1. **State Management with React Query**
-   - Use React Query to manage server state.
-   - Ensure efficient data fetching, caching, and synchronization with the backend.
-   - Utilize React Query's features to handle loading and error states.
-2. **Code Reusability and Separation**
-   - Structure your components to promote reusability and maintainability.
-   - Abstract shared logic into custom hooks or utility functions where appropriate.
-   - Follow best practices for component composition and props management.
-3. **Responsiveness**
-   - Ensure the application is responsive and functions well on various screen sizes and devices.
-   - Use Tailwind CSS utilities to create responsive layouts.
-4. **Error Handling**
-   - Implement robust error handling for API requests and unexpected data.
-   - Provide meaningful feedback to the user in case of errors.
-   - Use try-catch blocks and handle promise rejections appropriately in your backend.
+CORS for cross-origin requests
 
-## Resources
+Frontend
+React 18 with TypeScript
 
-- **Backend Server**: A partially implemented Node server in TypeScript will be provided. You are expected to complete the specified backend functionalities.
-- **SQLite Database**: The backend uses the `data.db` SQLite database, which contains all necessary data.
-- **Figma Design**: Follow the design specifications outlined in the provided Figma file.
-  [Figma Design for Web UI](https://www.figma.com/design/Wkbz27sGWBOFMDocOck4mm/Full-Stack-Developer-Assignment?node-id=0-1&node-type=canvas&t=zK4X8qKaPmxu84XZ-0)
+Tailwind CSS for styling
 
-## Deliverables
+React Query (TanStack Query) for state management
 
-- A full-stack application that meets the above requirements.
-- Source code organized and documented for readability.
-- Completed backend functionalities as specified.
-- At least one unit test demonstrating testing of a component or functionality.
-- Instructions on how to run the application locally, including setting up the backend and frontend.
+Axios for HTTP requests
 
-## Submission Instructions
+Vite for fast development and building
 
-- **Code Repository**: Provide access to your code via a Git repository (e.g., GitHub, GitLab).
-- **Readme File**: Include a `README.md` file with instructions on how to install dependencies, set up the database, run migrations (if any), and start both the backend and frontend servers.
+Lucide React for icons
+
+📁 Project Structure
+text
+web-developer-assignment-Public/
+├── backend/
+│   ├── src/
+│   │   ├── db/
+│   │   │   ├── connection.ts
+│   │   │   ├── users/
+│   │   │   │   ├── users.ts
+│   │   │   │   ├── types.ts
+│   │   │   │   └── query-templates.ts
+│   │   │   └── posts/
+│   │   │       ├── posts.ts
+│   │   │       ├── types.ts
+│   │   │       └── query-templates.ts
+│   │   ├── routes/
+│   │   │   ├── users.ts
+│   │   │   └── posts.ts
+│   │   ├── middleware/
+│   │   │   └── validation.ts
+│   │   └── index.ts
+│   ├── config/
+│   │   └── default.json
+│   ├── data.db (SQLite database)
+│   └── package.json
+└── frontend/
+    ├── src/
+    │   ├── components/
+    │   │   ├── ui/
+    │   │   │   ├── pagination.tsx
+    │   │   │   └── breadcrumb.tsx
+    │   │   ├── UsersTable.tsx
+    │   │   ├── PostsList.tsx
+    │   │   └── AddPostForm.tsx
+    │   ├── hooks/
+    │   │   ├── useUsers.ts
+    │   │   └── usePosts.ts
+    │   ├── pages/
+    │   │   ├── UsersPage.tsx
+    │   │   └── UserPostsPage.tsx
+    │   ├── types/
+    │   │   └── index.ts
+    │   ├── utils/
+    │   │   └── api.ts
+    │   └── App.tsx
+    └── package.json
+🚀 Quick Start
+Prerequisites
+Node.js 16+ installed
+
+npm or yarn package manager
+
+Backend Setup
+Navigate to backend directory
+
+bash
+cd backend
+Install dependencies
+
+bash
+npm install
+Start the development server
+
+bash
+npm run dev
+The backend will start on http://localhost:3001 with the following output:
+
+text
+🚀 Server running on port 3001
+📝 Environment: development
+Connected to SQLite database: ./data.db
+Frontend Setup
+Open a new terminal and navigate to frontend directory
+
+bash
+cd frontend
+Install dependencies
+
+bash
+npm install
+Start the development server
+
+bash
+npm run dev
+The frontend will start on http://localhost:3000
+
+📚 API Endpoints
+Users Endpoints
+Method	Endpoint	Description	Parameters
+GET	/users	Get paginated users	pageNumber, pageSize
+GET	/users/count	Get total user count	-
+Example:
+
+bash
+GET http://localhost:3001/users?pageNumber=0&pageSize=4
+Posts Endpoints
+Method	Endpoint	Description	Body
+GET	/posts	Get user's posts	userId (query param)
+POST	/posts	Create new post	{ userId, title, body }
+DELETE	/posts/:id	Delete post by ID	-
+Examples:
+
+bash
+# Get posts for user
+GET http://localhost:3001/posts?userId=user-id-here
+
+# Create new post
+POST http://localhost:3001/posts
+Content-Type: application/json
+
+{
+  "userId": "user-id-here",
+  "title": "Post Title",
+  "body": "Post content here..."
+}
+
+# Delete post
+DELETE http://localhost:3001/posts/post-id-here
+🎨 UI Components
+Users Page
+Users Table: Displays users with name, email, and formatted address
+
+Pagination: Right-aligned with Previous/Next buttons and page numbers
+
+Loading States: Loading.io CSS animations during data fetch
+
+Responsive Design: Mobile-friendly table and pagination
+
+User Posts Page
+User Header: User name, email, and post count
+
+Posts Grid: 3-column card layout (2 on tablet, 1 on mobile)
+
+Add Post Card: First card with + icon for creating new posts
+
+Delete Functionality: Trash icon on each post card (hover to reveal)
+
+Modal Forms: Clean modal for creating new posts
+
+🔧 Configuration
+Backend Configuration
+backend/config/default.json
+
+json
+{
+  "port": 3001,
+  "dbPath": "./data.db"
+}
+Frontend Configuration
+frontend/.env
+
+env
+VITE_API_URL=http://localhost:3001
+🧪 Testing
+Backend Testing
+bash
+cd backend
+npm test
+Frontend Testing
+bash
+cd frontend
+npm test
+🐛 Error Handling
+The application includes comprehensive error handling:
+
+Backend Errors
+400 Bad Request: Invalid input data
+
+404 Not Found: Resource not found
+
+500 Internal Server Error: Server-side issues
+
+Validation Errors: Detailed field-specific validation messages
+
+Frontend Errors
+Loading States: Visual feedback during API calls
+
+Error Boundaries: Graceful error handling in React components
+
+User Feedback: Clear error messages for failed operations
+
+📱 Responsive Design
+The application is fully responsive:
+
+Desktop: 3-column grid for posts, full table view
+
+Tablet: 2-column grid, optimized table
+
+Mobile: 1-column grid, simplified pagination
+
+🎯 Key Features Implementation
+Data Fetching with React Query
+Automatic caching and background updates
+
+Optimistic updates for instant UI feedback
+
+Error retry logic and loading states
+
+Type Safety
+Full TypeScript implementation
+
+Shared types between frontend and backend
+
+Compile-time error checking
+
+Performance Optimizations
+Paginated data loading
+
+Efficient re-renders with React Query
+
+Optimized database queries
+
+🚀 Deployment
+Backend Deployment (Railway/Render)
+Set environment variables:
+
+env
+NODE_ENV=production
+PORT=3001
+DB_PATH=./data.db
+Build command:
+
+bash
+npm run build
+Start command:
+
+bash
+npm start
+Frontend Deployment (Vercel/Netlify)
+Set environment variable:
+
+env
+VITE_API_URL=https://your-backend-url.railway.app
+Build command:
+
+bash
+npm run build
+🔍 Troubleshooting
+Common Issues
+Database Connection Error
+
+text
+Error: SQLITE_CANTOPEN: unable to open database file
+Solution: Ensure data.db file exists in the backend directory
+
+CORS Errors
+
+text
+Access to fetch at 'http://localhost:3001' from origin 'http://localhost:3000' has been blocked by CORS policy
+Solution: Backend includes CORS middleware - ensure it's running on port 3001
+
+Validation Errors
+
+text
+ValidationError: Title is required, Body is required
+Solution: Ensure all required fields are provided when creating posts
+
+Port Already in Use
+
+text
+Error: listen EADDRINUSE: address already in use :::3001
+Solution: Change port in backend config or kill existing process
+
+Development Tips
+Use browser DevTools to monitor network requests
+
+Check backend console for detailed error logs
+
+Use React Query DevTools for frontend state debugging
+
+Verify database file path in backend configuration
+
+📄 License
+This project is for assessment purposes as part of a full-stack developer assignment.
+
+👥 Contributing
+This is an assessment project. For educational purposes only.
+
+Note: This application demonstrates modern full-stack development practices including TypeScript, React Query, responsive design, and comprehensive error handling.
+
