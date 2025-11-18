@@ -4,10 +4,10 @@ import postsRouter from "./routes/posts";
 import usersRouter from "./routes/users";
 import { errorHandler } from "./middleware/errorHandler";
 import path from "path";
+import cors from "cors";
 
 const app: Application = express();
 
-// Security headers (consider using helmet in production)
 // app.use((req, res, next) => {
 //   res.header("Access-Control-Allow-Origin", "*");
 //   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, PATCH");
@@ -18,25 +18,27 @@ const app: Application = express();
 //   next();
 // });
 
-// CORS middleware - update for production
-app.use((req, res, next) => {
-  const allowedOrigins = [
-    "http://localhost:3000",
-    "https://user-manangement-system.onrender.com", 
-  ];
-  const origin = req.headers.origin;
-  
-  if (origin && allowedOrigins.includes(origin)) {
-    res.header('Access-Control-Allow-Origin', origin);
-  }
-  
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-  );
-  next();
-});
+
+
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://user-manangement-system.onrender.com",
+];
+
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
+  })
+);
+
+app.options("*", cors());
 
 // Body parsing
 app.use(express.json({ limit: "10mb" }));
