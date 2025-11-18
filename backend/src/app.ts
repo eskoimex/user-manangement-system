@@ -23,6 +23,7 @@ const app: Application = express();
 const allowedOrigins = [
   "http://localhost:3000",
   "https://user-manangement-system.onrender.com",
+  "https://user-manangement-system-lema.onrender.com"
 ];
 
 app.use(
