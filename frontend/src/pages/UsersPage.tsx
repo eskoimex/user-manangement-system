@@ -11,7 +11,6 @@ import { PaginationController } from "../components/ui/PaginationController";
 export const UsersPage: React.FC = () => {
   const pageSize = 4;
 
-
   const {
     data: totalCount = 0,
     isLoading: countLoading,
@@ -35,7 +34,6 @@ export const UsersPage: React.FC = () => {
     navigate(`/users/${user.id}`, { state: user });
   };
 
-
   if (usersError || countError) {
     return (
       <div className="min-h-screen bg-gray-50 py-8">
@@ -52,7 +50,6 @@ export const UsersPage: React.FC = () => {
       </div>
     );
   }
-
 
   return (
     <div className="min-h-screen py-8">
