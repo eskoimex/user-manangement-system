@@ -4,10 +4,9 @@ import { useUsers } from "../hooks/useUsers";
 import { useUsersCount } from "../hooks/useUsers";
 import { UsersTable } from "../components/UsersTable";
 import { Loader } from "../components/ui/loader";
-
 import { usePagination } from "../hooks/usePagination";
 import { User } from "../types";
-import { PaginationController } from "../components/ui/PaginationController";
+import { PaginationController } from "../components/ui/pagination_controller";
 
 export const UsersPage: React.FC = () => {
   const pageSize = 4;
@@ -55,12 +54,6 @@ export const UsersPage: React.FC = () => {
   return (
     <div className="min-h-screen py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="mb-8">
-          <h1 className="font-sans font-medium text-6xl leading-[6rem] text-[#020618]">
-            Users
-          </h1>
-        </div>
-
         {usersLoading ? (
           <Loader />
         ) : (
