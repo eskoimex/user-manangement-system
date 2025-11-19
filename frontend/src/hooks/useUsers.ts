@@ -1,7 +1,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { User } from "../types";
-import { api } from "../lib/utils/api";
+import { api } from "../api/axios";
 
 export const useUsers = (pageNumber: number, pageSize: number = 4) => {
   return useQuery({

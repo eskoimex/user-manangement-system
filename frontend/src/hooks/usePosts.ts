@@ -1,7 +1,7 @@
 
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Post } from "../types";
-import { api } from "../lib/utils/api";
+import { api } from "../api/axios";
 
 
 export const usePosts = (userId: string) => {

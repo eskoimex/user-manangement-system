@@ -12,7 +12,6 @@ import { getPosts, deletePost, createPost, userExists } from "../db/posts/posts"
 
 const router = Router();
 
-// GET /posts - With query validation
 router.get("/", 
   validateQuery(getPostsSchema),
   asyncHandler(async (req, res) => {
@@ -28,7 +27,6 @@ router.get("/",
   })
 );
 
-// DELETE /posts/:id - With params validation
 router.delete("/:id",
   validateParams(deletePostSchema),
   asyncHandler(async (req, res) => {
@@ -47,19 +45,16 @@ router.delete("/:id",
   })
 );
 
-// POST /posts - With body validation
 router.post("/",
   validate(createPostSchema),
   asyncHandler(async (req, res) => {
     const { userId, title, body } = req.body;
 
-    // Check if user exists (business logic validation)
     const userExistsResult = await userExists(userId);
     if (!userExistsResult) {
       throw new NotFoundError("User");
     }
 
-    // Create post (data is already validated and sanitized by Joi)
     const newPost = await createPost(userId, title, body);
     
     res.status(201).json({

@@ -18,7 +18,6 @@ export const validate = (schema: ObjectSchema) => {
       throw new ValidationError(errorMessages);
     }
 
-    // Replace req.body with the validated and sanitized data
     req.body = value;
     next();
   };

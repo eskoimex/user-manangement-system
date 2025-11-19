@@ -27,7 +27,6 @@ const getStatusCode = (error: any): number => {
 };
 
 const getErrorMessage = (error: any): string => {
-  // Don't expose internal errors in production
   if (process.env.NODE_ENV === "production" && !error.isOperational) {
     return "Something went wrong";
   }
