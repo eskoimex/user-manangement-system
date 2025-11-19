@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { useUsers } from "../hooks/useUsers";
 import { useUsersCount } from "../hooks/useUsers";
 import { UsersTable } from "../components/UsersTable";
-import { Loader } from "../components/ui/Loader";
+import { Loader } from "../components/ui/loader";
+
 import { usePagination } from "../hooks/usePagination";
 import { User } from "../types";
 import { PaginationController } from "../components/ui/PaginationController";
