@@ -3,9 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useUsers } from "../hooks/useUsers";
 import { useUsersCount } from "../hooks/useUsers";
 import { UsersTable } from "../components/UsersTable";
-import { Loader } from "../components/ui/loader";
 import { usePagination } from "../hooks/usePagination";
-import { User } from "../types";
 import { PaginationController } from "../components/ui/pagination_controller";
 
 export const UsersPage: React.FC = () => {
@@ -30,7 +28,7 @@ export const UsersPage: React.FC = () => {
 
   const navigate = useNavigate();
 
-  const handleSelect = (user: User) => {
+  const handleSelect = (user: any) => {
     navigate(`/users/${user.id}`, { state: user });
   };
 
@@ -52,20 +50,18 @@ export const UsersPage: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen py-8">
+    <div className="min-h-screen py-8 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {usersLoading ? (
-          <Loader />
-        ) : (
-          <UsersTable
-            users={users}
-            onUserSelect={handleSelect}
-            isLoading={usersLoading}
-          />
-        )}
+        {/* Users Table always rendered */}
+        <UsersTable
+          users={users}
+          onUserSelect={handleSelect}
+          isLoading={usersLoading}
+        />
 
+        {/* Pagination */}
         {pageCount > 1 && (
-          <div className="mt-8 flex w-full justify-end">
+          <div className="mt-4 flex w-full justify-end">
             <PaginationController
               page={page}
               pageCount={pageCount}
