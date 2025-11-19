@@ -10,7 +10,6 @@ export const useUsers = (pageNumber: number, pageSize: number = 4) => {
       const response = await api.get(
         `/users?pageNumber=${pageNumber}&pageSize=${pageSize}`
       );
-      console.log(response.data.data)
       return response.data.data;
     },
     staleTime: 5 * 60 * 1000,
