@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const isDev = import.meta.env.VITE_NODE_ENV;
+const isDev = import.meta.env.VITE_NODE_ENV === "development"; 
 
 const baseURL = isDev
   ? import.meta.env.VITE_API_URL_LOCAL 
