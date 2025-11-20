@@ -1,6 +1,7 @@
+
 type Props = {
-  page: number; 
-  pageCount: number; 
+  page: number;
+  pageCount: number;
   loading?: boolean;
   onNext: () => void;
   onPrev: () => void;
@@ -18,26 +19,32 @@ export const PaginationController: React.FC<Props> = ({
   if (pageCount <= 1) return null;
 
   const getPageNumbers = () => {
-    const pages: number[] = [];
+    // Small page count – show all
     if (pageCount <= 6) return [...Array(pageCount).keys()];
 
-    if (page < 3) {
-      pages.push(0, 1, 2, -1, pageCount - 3, pageCount - 2, pageCount - 1);
-    } else if (page > pageCount - 4) {
-      pages.push(0, 1, 2, -1, pageCount - 3, pageCount - 2, pageCount - 1);
-    } else {
-      pages.push(
-        0,
-        1,
-        -1,
-        page - 1,
-        page,
-        page + 1,
-        -1,
-        pageCount - 2,
-        pageCount - 1
-      );
+    const pages: number[] = [];
+    const current = page;
+    const last = pageCount - 1;
+
+    pages.push(0, 1);
+
+    if (current > 3) {
+      pages.push(-1);
     }
+
+    const start = Math.max(2, current - 1);
+    const end = Math.min(last - 1, current + 1);
+
+    for (let i = start; i <= end; i++) {
+      pages.push(i);
+    }
+
+    if (current < last - 3) {
+      pages.push(-1);
+    }
+
+    pages.push(last - 1, last);
+
     return pages;
   };
 
