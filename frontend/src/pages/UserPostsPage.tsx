@@ -39,7 +39,7 @@ export const UserPostsPage: React.FC<UserPostsPageProps> = () => {
     }
   };
 
-  const getGridCols = "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"; // 3 columns on large screens
+  const getGridCols = "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"; 
 
   return (
     <div className="min-h-screen bg-white">

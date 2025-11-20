@@ -156,8 +156,6 @@ npm run dev:once
    - In place of try and catch i used a global error exception for better performance.
 
 
-
 ## Note
 - Both Backend and frontend are hosted on Render. The render server sleeps at interval so sometime , you need to hit the server twice and wait for it to resume before it popultase data.
 
-- Also on production i noticed that tailwindcss did not apply on my model, but it works okay locally

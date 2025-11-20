@@ -19,7 +19,6 @@ export const PaginationController: React.FC<Props> = ({
   if (pageCount <= 1) return null;
 
   const getPageNumbers = () => {
-    // Small page count – show all
     if (pageCount <= 6) return [...Array(pageCount).keys()];
 
     const pages: number[] = [];

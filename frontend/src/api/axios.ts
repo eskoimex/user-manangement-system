@@ -1,8 +1,13 @@
-
 import axios from "axios";
 
+const isDev = import.meta.env.VITE_NODE_ENV;
+
+const baseURL = isDev
+  ? import.meta.env.VITE_API_URL_LOCAL 
+  : import.meta.env.VITE_API_URL; 
+
 export const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || import.meta.env.VITE_API_URL_LOCAL,
+  baseURL,
   withCredentials: true,
   timeout: 30000,
 });
@@ -10,7 +15,11 @@ export const api = axios.create({
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    console.error("API Error:", error);
+    if (isDev) {
+      console.error("API Error:", error);
+    } else {
+      console.error("API Error:", error?.message || "Something went wrong");
+    }
     return Promise.reject(error);
   }
 );

@@ -34,7 +34,7 @@ export const UsersPage: React.FC = () => {
 
   if (usersError || countError) {
     return (
-      <div className="min-h-screen bg-gray-50 py-8">
+      <div className="min-h-screen py-2">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-red-50 border border-red-200 rounded-lg p-4">
             <h2 className="text-red-800 font-semibold">Error Loading Data</h2>
@@ -50,26 +50,26 @@ export const UsersPage: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen py-8 bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Users Table always rendered */}
+    <div className="min-h-screen py-2 flex flex-col items-center">
+      <div className="w-full max-w-[880px] px-4">
         <UsersTable
           users={users}
           onUserSelect={handleSelect}
           isLoading={usersLoading}
         />
 
-        {/* Pagination */}
         {pageCount > 1 && (
           <div className="mt-4 flex w-full justify-end">
-            <PaginationController
-              page={page}
-              pageCount={pageCount}
-              loading={countLoading}
-              onNext={next}
-              onPrev={prev}
-              onPageChange={setPage}
-            />
+            <div className="inline-flex">
+              <PaginationController
+                page={page}
+                pageCount={pageCount}
+                loading={countLoading}
+                onNext={next}
+                onPrev={prev}
+                onPageChange={setPage}
+              />
+            </div>
           </div>
         )}
       </div>
