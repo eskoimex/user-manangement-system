@@ -1,8 +1,6 @@
-
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Post } from "../types";
 import { api } from "../api/axios";
-
 
 export const usePosts = (userId: string) => {
   return useQuery<Post[], Error>({
@@ -16,7 +14,6 @@ export const usePosts = (userId: string) => {
     staleTime: 2 * 60 * 1000,
   });
 };
-
 
 export const useDeletePost = () => {
   const queryClient = useQueryClient();
@@ -50,21 +47,24 @@ export const useDeletePost = () => {
   });
 };
 
-
 export const useCreatePost = () => {
-  const queryClient = useQueryClient();
-
   return useMutation({
-    mutationFn: async (data: {
+    mutationFn: async (payload: {
       userId: string;
       title: string;
       body: string;
     }) => {
-      const response = await api.post("/posts", data);
-      return response.data;
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["posts"] });
+      try {
+        const res = await api.post("/posts", payload);
+        return res.data;
+      } catch (err: any) {
+        const backendMessage =
+          err?.response?.data?.error?.message ||
+          err?.response?.data?.message ||
+          "An unexpected error occurred";
+
+        throw new Error(backendMessage);
+      }
     },
   });
 };

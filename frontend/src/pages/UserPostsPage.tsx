@@ -1,7 +1,6 @@
 import React from "react";
 import { usePosts } from "../hooks/usePosts";
 import { usePostDeletion } from "../hooks/usePostDeletion";
-
 import { AddPostCard } from "../components/AddPostCard";
 import { Breadcrumb } from "../components/ui/breadcrumb";
 import { Loader } from "../components/ui/loader";

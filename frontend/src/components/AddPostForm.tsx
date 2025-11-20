@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { useCreatePost } from "../hooks/usePosts";
 
@@ -15,7 +14,11 @@ export const AddPostForm: React.FC<AddPostFormProps> = ({
 }) => {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
-  const [error, setError] = useState("");
+  const [error, setError] = useState<string | string[]>("");
+  const [fieldErrors, setFieldErrors] = useState<{
+    title?: string;
+    body?: string;
+  }>({});
 
   const createPostMutation = useCreatePost();
 
@@ -37,10 +40,18 @@ export const AddPostForm: React.FC<AddPostFormProps> = ({
       setTitle("");
       setBody("");
       setError("");
+      setFieldErrors({});
       onSuccess();
       onClose();
-    } catch {
-      setError("Failed to create post. Please try again.");
+    } catch (e: any) {
+      const msg = e.message || "Failed to create post.";
+
+      const fe: { title?: string; body?: string } = {};
+      if (msg.toLowerCase().includes("title")) fe.title = msg;
+      if (msg.toLowerCase().includes("body")) fe.body = msg;
+
+      setFieldErrors(fe);
+      setError(msg);
     }
   };
 
@@ -52,9 +63,20 @@ export const AddPostForm: React.FC<AddPostFormProps> = ({
             New Post
           </h2>
 
-          {error && (
-            <div className="mb-4 text-red-600 text-sm font-medium">{error}</div>
-          )}
+          {error &&
+            (Array.isArray(error) ? (
+              <ul className="mb-4 bg-red-50 border border-red-300 p-3 rounded-md">
+                {error.map((msg, idx) => (
+                  <li key={idx} className="text-red-700 text-sm">
+                    {msg}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <div className="mb-4 rounded-md bg-red-50 border border-red-300 p-3">
+                <p className="text-sm font-medium text-red-700">{error}</p>
+              </div>
+            ))}
 
           <div className="space-y-4">
             <div>
@@ -65,10 +87,13 @@ export const AddPostForm: React.FC<AddPostFormProps> = ({
                 type="text"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                required
                 maxLength={TITLE_LIMIT}
                 placeholder="Give your post a title"
-                className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-300"
+                className={`w-full px-3 py-2 border rounded-md focus:outline-none ${
+                  fieldErrors.title
+                    ? "border-red-500 focus:ring-red-300"
+                    : "focus:ring-blue-300"
+                }`}
               />
               <p className="text-right text-xs text-gray-500">
                 {title.length}/{TITLE_LIMIT}
@@ -82,11 +107,14 @@ export const AddPostForm: React.FC<AddPostFormProps> = ({
               <textarea
                 value={body}
                 onChange={(e) => setBody(e.target.value)}
-                required
                 maxLength={BODY_LIMIT}
                 rows={6}
                 placeholder="Write something mind-blowing"
-                className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-300"
+                className={`w-full px-3 py-2 border rounded-md focus:outline-none ${
+                  fieldErrors.body
+                    ? "border-red-500 focus:ring-red-300"
+                    : "focus:ring-blue-300"
+                }`}
               />
               <p className="text-right text-xs text-gray-500">
                 {body.length}/{BODY_LIMIT}
