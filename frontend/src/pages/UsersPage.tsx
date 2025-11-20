@@ -1,13 +1,17 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useUsers } from "../hooks/useUsers";
-import { useUsersCount } from "../hooks/useUsers";
+import { useUsers, useUsersCount } from "../hooks/useUsers";
 import { UsersTable } from "../components/UsersTable";
 import { usePagination } from "../hooks/usePagination";
 import { PaginationController } from "../components/ui/pagination_controller";
+import { EmptyState } from "../components/ui/EmptyState";
+import { Loader } from "../components/ui/loader";
+import { User } from "../types";
+
+const PAGE_SIZE = 4;
 
 export const UsersPage: React.FC = () => {
-  const pageSize = 4;
+  const navigate = useNavigate();
 
   const {
     data: totalCount = 0,
@@ -17,34 +21,49 @@ export const UsersPage: React.FC = () => {
 
   const { page, setPage, pageCount, next, prev } = usePagination(
     totalCount,
-    pageSize
+    PAGE_SIZE
   );
 
   const {
     data: users = [],
     isLoading: usersLoading,
     error: usersError,
-  } = useUsers(page, pageSize);
+  } = useUsers(page, PAGE_SIZE);
 
-  const navigate = useNavigate();
-
-  const handleSelect = (user: any) => {
+  const handleSelect = (user: User) => {
     navigate(`/users/${user.id}`, { state: user });
   };
 
   if (usersError || countError) {
     return (
-      <div className="min-h-screen py-2">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-            <h2 className="text-red-800 font-semibold">Error Loading Data</h2>
-            <p className="text-red-600 mt-1">
-              {(usersError as Error)?.message ||
-                (countError as Error)?.message ||
-                "Unable to load users"}
-            </p>
-          </div>
-        </div>
+      <div className="min-h-screen flex items-center justify-center px-4">
+        <EmptyState
+          message="Unable to load users"
+          description={
+            (usersError as Error)?.message ||
+            (countError as Error)?.message ||
+            "An unexpected error occurred."
+          }
+        />
+      </div>
+    );
+  }
+
+  if (usersLoading && countLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Loader size="lg" />
+      </div>
+    );
+  }
+
+  if (!usersLoading && totalCount === 0) {
+    return (
+      <div className="min-h-screen flex items-center justify-center px-4">
+        <EmptyState
+          message="No users found"
+          description="There are no users available at the moment."
+        />
       </div>
     );
   }
@@ -60,16 +79,14 @@ export const UsersPage: React.FC = () => {
 
         {pageCount > 1 && (
           <div className="mt-4 flex w-full justify-end">
-            <div className="inline-flex">
-              <PaginationController
-                page={page}
-                pageCount={pageCount}
-                loading={countLoading}
-                onNext={next}
-                onPrev={prev}
-                onPageChange={setPage}
-              />
-            </div>
+            <PaginationController
+              page={page}
+              pageCount={pageCount}
+              loading={countLoading}
+              onNext={next}
+              onPrev={prev}
+              onPageChange={setPage}
+            />
           </div>
         )}
       </div>
